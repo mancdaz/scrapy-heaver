@@ -1,1 +1,5 @@
 *.html
+*.json
+*.csv
+*.DS_Store
+*.pyc
