@@ -47,5 +47,5 @@ class QuotesSpider(scrapy.Spider):
             'item_link' : item_link,
             'item_desc' : response.css('p.intro::text').extract(),
             'item_features' : response.css('.p-c ul li::text').extract(),
-            #'item_sizes' : ,
+            'item_sizes' : , response.css('.p-c  p:nth-of-type(2)::text').get()
         }
