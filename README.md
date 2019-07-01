@@ -8,12 +8,15 @@ running on a mac:
 #### activate the virtualenv (navigate to where your virtualenv is, usually ~/.virtualenvs/<name_of_virtualenv>
     source bin/activate
     
-#### install scrapy
-    pip install scrapy
-    
 #### clone this repo
     git clone https://github.com/mancdaz/scrapy-heaver/
-    
-#### run your desired spider
+
+#### install scrapy and requirements
     cd scrapy-heaver
-    scrapy crawl snickers
+    pip install -r requirements.txt
+    
+#### run your desired spider (select output type using filename extension)
+    scrapy crawl snickers -o snickers.json
+    scrapy crawl snickers -o snickers.csv
+
+    <lots of output>

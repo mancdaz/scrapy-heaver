@@ -14,6 +14,8 @@ BOT_NAME = 'heaver'
 SPIDER_MODULES = ['heaver.spiders']
 NEWSPIDER_MODULE = 'heaver.spiders'
 
+ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
+IMAGES_STORE='/tmp/images'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'heaver (+http://www.yourdomain.com)'
