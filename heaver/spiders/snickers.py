@@ -56,6 +56,7 @@ class QuotesSpider(scrapy.Spider):
             'item_link' : item_link,
             'item_desc' : response.css('p.intro::text').getall(),
             'item_features' : response.css('.p-c ul li::text').getall(),
-            'item_sizes' : (response.css('.p-c  p:nth-of-type(2)::text').getall().strip(),
+            'item_sizes' : response.css('.p-c  p:nth-of-type(2)::text').getall(),
+            'item_addl_info' : response.css('.symbols.cf a img::attr(alt)').getall(),
             'image_urls': image_urls
         }
