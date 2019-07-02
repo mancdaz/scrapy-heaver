@@ -36,13 +36,17 @@ class QuotesSpider(scrapy.Spider):
         global cols
 
         item_link = response.url
-        print('item link is %s: ' % item_link)
         item_colour_num = item_link.rsplit('=')[1]
         item_colour_desc = cols[item_colour_num]
 
         item_num_name = (' '.join(response.css('h1::text').getall())).strip()
         item_num = item_num_name.partition(' ')[0]
         item_name = item_num_name.partition(' ')[2]
+
+        image_urls = []
+        for href in response.css('.img.zoom-container a[id="zoom-target"]::attr(href)').getall():
+            image_url = response.urljoin(href)
+            image_urls.append(image_url)
 
         yield {
             'item_num': item_num,
@@ -53,5 +57,5 @@ class QuotesSpider(scrapy.Spider):
             'item_desc' : response.css('p.intro::text').extract(),
             'item_features' : response.css('.p-c ul li::text').extract(),
             'item_sizes' : response.css('.p-c  p:nth-of-type(2)::text').get(),
-            'image_urls': response.css('.img.zoom-container a img::attr(src)').getall()
+            'image_urls': image_urls
         }
