@@ -40,8 +40,13 @@ class QuotesSpider(scrapy.Spider):
         item_colour_num = item_link.rsplit('=')[1]
         item_colour_desc = cols[item_colour_num]
 
+        item_num_name = (' '.join(response.css('h1::text').getall())).strip()
+        item_num = item_num_name.partition(' ')[0]
+        item_name = item_num_name.partition(' ')[2]
+
         yield {
-            'item_name' : (' '.join(response.css('h1::text').getall())).strip(),
+            'item_num': item_num,
+            'item_name': item_name,
             'item_color_num': item_colour_num,
             'item_colour_desc': item_colour_desc,
             'item_link' : item_link,
