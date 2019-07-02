@@ -54,8 +54,8 @@ class QuotesSpider(scrapy.Spider):
             'item_color_num': item_colour_num,
             'item_colour_desc': item_colour_desc,
             'item_link' : item_link,
-            'item_desc' : response.css('p.intro::text').extract(),
-            'item_features' : response.css('.p-c ul li::text').extract(),
-            'item_sizes' : response.css('.p-c  p:nth-of-type(2)::text').get(),
+            'item_desc' : response.css('p.intro::text').getall(),
+            'item_features' : response.css('.p-c ul li::text').getall(),
+            'item_sizes' : (response.css('.p-c  p:nth-of-type(2)::text').getall().strip(),
             'image_urls': image_urls
         }
