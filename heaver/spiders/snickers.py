@@ -41,7 +41,7 @@ class QuotesSpider(scrapy.Spider):
         item_colour_desc = cols[item_colour_num]
 
         yield {
-            'item_name' : response.css('h1::text').extract(),
+            'item_name' : (' '.join(response.css('h1::text').getall())).strip(),
             'item_color_num': item_colour_num,
             'item_colour_desc': item_colour_desc,
             'item_link' : item_link,
