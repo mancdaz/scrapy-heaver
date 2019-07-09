@@ -51,7 +51,7 @@ class QuotesSpider(scrapy.Spider):
         yield {
             'item_num': item_num,
             'item_name': item_name,
-            'item_color_num': item_colour_num,
+            'item_colour_num': item_colour_num,
             'item_colour_desc': item_colour_desc,
             'item_link' : item_link,
             'item_desc' : response.css('p.intro::text').getall(),

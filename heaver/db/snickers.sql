@@ -3,7 +3,7 @@ CREATE TABLE snickers(
   guid CHAR(32) PRIMARY KEY,
   item_num TEXT,
   item_name TEXT,
-  item_color_num TEXT,
+  item_colour_num TEXT,
   item_colour_desc TEXT,
   item_link TEXT,
   item_desc TEXT,
