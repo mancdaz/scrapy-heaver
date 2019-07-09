@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import MySQLdb
+from datetime import datetime
 
 host = 'localhost'
 user = 'snickers'
@@ -31,33 +32,71 @@ class HeaverMysqlPipeline(object):
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
+        ''' insert or update if exists '''
         guid = self._get_guid(item)
-        sql = "INSERT INTO snickers(guid, \
-              item_num, \
-              item_name, \
-              item_colour_num, \
-              item_colour_desc, \
-              item_link, \
-              item_desc, \
-              item_features, \
-              item_sizes, \
-              item_addl_info, \
-              image_urls) \
-              VALUES (\"%s\", \"%s\", \
-              \"%s\", \"%s\", \"%s\", \
-              \"%s\", \"%s\", \"%s\", \
-              \"%s\", \"%s\", \"%s\")" \
-              % (guid,
-                 item['item_num'],
-                 item['item_name'],
-                 item['item_colour_num'],
-                 item['item_colour_desc'],
-                 item['item_link'],
-                 item['item_desc'],
-                 item['item_features'],
-                 item['item_sizes'],
-                 item['item_addl_info'],
-                 item['image_urls'])
+        now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
+
+        self.cursor.execute("""SELECT EXISTS(
+            SELECT 1 from snickers where guid = \"%s\"
+            )""" % guid)
+        exists = self.cursor.fetchone()[0]
+
+        if exists:
+            sql = "UPDATE snickers \
+                  set item_num=\"%s\", \
+                  item_name=\"%s\", \
+                  item_colour_num=\"%s\", \
+                  item_colour_desc=\"%s\", \
+                  item_link=\"%s\", \
+                  item_desc=\"%s\", \
+                  item_features=\"%s\", \
+                  item_sizes=\"%s\", \
+                  item_addl_info=\"%s\", \
+                  image_urls=\"%s\", \
+                  updated=\"%s\" \
+                  WHERE guid=\"%s\"" % (
+                     item['item_num'],
+                     item['item_name'],
+                     item['item_colour_num'],
+                     item['item_colour_desc'],
+                     item['item_link'],
+                     item['item_desc'],
+                     item['item_features'],
+                     item['item_sizes'],
+                     item['item_addl_info'],
+                     item['image_urls'],
+                     now,
+                     guid,)
+        else:
+            sql = "INSERT INTO snickers(guid, \
+                  item_num, \
+                  item_name, \
+                  item_colour_num, \
+                  item_colour_desc, \
+                  item_link, \
+                  item_desc, \
+                  item_features, \
+                  item_sizes, \
+                  item_addl_info, \
+                  image_urls, \
+                  updated) \
+                  VALUES (\"%s\", \"%s\", \"%s\", \
+                  \"%s\", \"%s\", \"%s\", \
+                  \"%s\", \"%s\", \"%s\", \
+                  \"%s\", \"%s\", \"%s\")" \
+                  % (guid,
+                     item['item_num'],
+                     item['item_name'],
+                     item['item_colour_num'],
+                     item['item_colour_desc'],
+                     item['item_link'],
+                     item['item_desc'],
+                     item['item_features'],
+                     item['item_sizes'],
+                     item['item_addl_info'],
+                     item['image_urls'],
+                     now)
+
         try:
             self.cursor.execute(sql)
             self.conn.commit()
