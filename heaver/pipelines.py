@@ -54,13 +54,11 @@ class HeaverMysqlPipeline(object):
             item['item_sizes'],
             item['item_addl_info',
             item['image_urls'])
+        except e:
+            print(error: %s) % e
 
 
 
     def _get_guid(self, item):
         """ Generate a unique identifier based on product code and product colour """
         return '%s-%s' % (item['item_num'], item['item_colour_num'])
-
-
-
-
