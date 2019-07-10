@@ -32,15 +32,17 @@ class HeaverMysqlPipeline(object):
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
-        ''' insert or update if exists '''
+        ''' insert or update if already exists '''
         guid = self._get_guid(item)
         now = datetime.utcnow().replace(microsecond=0).isoformat(' ')
 
+        # check if our product exists in db already
         self.cursor.execute("""SELECT EXISTS(
             SELECT 1 from snickers where guid = \"%s\"
             )""" % guid)
         exists = self.cursor.fetchone()[0]
 
+        # if it exists, update it and the timestamp
         if exists:
             sql = "UPDATE snickers \
                   set item_num=\"%s\", \
@@ -67,6 +69,7 @@ class HeaverMysqlPipeline(object):
                      item['image_urls'],
                      now,
                      guid,)
+        # if it doesn't already exist, add an entry to the db
         else:
             sql = "INSERT INTO snickers(guid, \
                   item_num, \
