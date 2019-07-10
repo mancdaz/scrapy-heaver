@@ -21,6 +21,12 @@ ITEM_PIPELINES = {
 
 IMAGES_STORE='/tmp/images'
 
+
+# MySQL connection settings
+MYSQL_HOST = 'localhost'
+MYSQL_DBNAME = 'websites'
+MYSQL_USER = 'snickers'
+MYSQL_PASSWD = 'snickers'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'heaver (+http://www.yourdomain.com)'
 

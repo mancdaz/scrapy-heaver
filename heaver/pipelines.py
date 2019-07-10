@@ -7,29 +7,25 @@
 import MySQLdb
 from datetime import datetime
 
-host = 'localhost'
-user = 'snickers'
-password = 'snickers'
-port = 3306
-db = 'websites'
-
-
-class HeaverPipeline(object):
-    def process_item(self, item, spider):
-        return item
-
 
 class HeaverMysqlPipeline(object):
 
-    def __init__(self):
-        self.conn = MySQLdb.connect(
-            host=host,
-            port=port,
-            user=user,
-            password=password,
-            db=db,
-            )
+    def __init__(self, dbsettings):
+        self.conn = MySQLdb.connect(**dbsettings)
         self.cursor = self.conn.cursor()
+
+    @classmethod
+    def from_settings(cls, settings):
+        dbsettings = dict(
+            host=settings['MYSQL_HOST'],
+            db=settings['MYSQL_DBNAME'],
+            user=settings['MYSQL_USER'],
+            passwd=settings['MYSQL_PASSWD'],
+            charset='utf8',
+            use_unicode=True,
+        )
+
+        return cls(dbsettings)
 
     def process_item(self, item, spider):
         ''' insert or update if already exists '''
