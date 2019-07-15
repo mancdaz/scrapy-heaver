@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'heaver.spiders'
 
 ITEM_PIPELINES = {
     'scrapy.pipelines.images.ImagesPipeline': 100,
-    'heaver.pipelines.HeaverMysqlPipeline': 200
+#    'heaver.pipelines.HeaverMysqlPipeline': 200
 }
 
 IMAGES_STORE='/tmp/images'
@@ -31,7 +31,7 @@ MYSQL_PASSWD = 'snickers'
 #USER_AGENT = 'heaver (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

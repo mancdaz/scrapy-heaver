@@ -12,6 +12,12 @@ class QuotesSpider(scrapy.Spider):
         'http://www.snickersworkwear.co.uk/workwear/?items-per-page=all',
     ]
 
+    custom_settings = {
+            'ITEM_PIPELINES': {'scrapy.pipelines.images.ImagesPipeline': 100,
+                               'heaver.pipelines.HeaverMysqlPipeline': 200,
+        }
+    }
+
 
     def parse(self, response):
 
