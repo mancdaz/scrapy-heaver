@@ -33,6 +33,9 @@ MYSQL_PASSWD = 'snickers'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+#Log all duplicate requests, not just the first one
+DUPEFILTER_DEBUG = True
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

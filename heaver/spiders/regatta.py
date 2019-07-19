@@ -7,6 +7,7 @@ class RegattaSpider(scrapy.Spider):
     download_delay = 1
     allowed_domains = ['www.regattaprofessional.com']
     start_urls = ['http://www.regattaprofessional.com/regatta-professional-range.aspx',
+    #start_urls = ['http://www.regattaprofessional.com/tacticalthreads-range.aspx',
 #                  'http://www.regattaprofessional.com/tacticalthreads-range.aspx',
 #                  'http://www.regattaprofessional.com/activewear-range.aspx',
 #                  'http://www.regattaprofessional.com/originals-range.aspx']
