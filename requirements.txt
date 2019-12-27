@@ -2,3 +2,4 @@ scrapy
 Pillow
 mysql
 scrapy-splash
+requests
